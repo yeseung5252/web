@@ -10,11 +10,14 @@
 }
 
 /* 1. 풀 스크린 설정 */
+/* style.css 파일 */
 body {
-    margin: 0; 
+    margin: 0;
     padding: 0;
-    height: 100vh; /* 화면 높이를 꽉 채움 */
-    background-color: white; 
+    box-sizing: border-box;
+    /* 폰트 이름 변경: 이서윤체 (한글) -> 'LeeSeoyun' (CDN 지정 영문) */
+    font-family: 'LeeSeoyun', "Nanum Pen Script", Arial, sans-serif; 
+    /* ... (나머지 스타일 유지) ... */
 }
 
 /* 2. 메인 콘텐츠 (스크롤 영역) */
