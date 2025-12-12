@@ -4,35 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CATEGORY</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2207-02@1.0/LeeSeoyun.min.css">
+    
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* 최소한의 스타일 정의 (style.css에 없다면) */
-        body { margin: 0; font-family: Leeseoyun, sans-serif; background-color: #f4f4f4; }
-        .page-content { padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
-        .tab-menu { display: flex; justify-content: center; margin-bottom: 30px; border-bottom: 2px solid #ddd; }
-        .tab-item { padding: 10px 20px; cursor: pointer; text-decoration: none; color: #555; font-weight: bold; transition: color 0.3s, border-bottom 0.3s; }
-        .tab-item.active { color: #000; border-bottom: 3px solid #000; }
-        .product-link { text-decoration: none; color: inherit; }
-        .product-list-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 30px; }
-        .product-item { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); text-align: center; position: relative; }
-        .product-item img { width: 100%; height: auto; border-radius: 6px; margin-bottom: 10px; }
-        .product-item h3 { font-size: 1.1em; margin: 5px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .price { font-weight: bold; color: #333; }
-        .bookmark-icon {
-            position: absolute;
-            top: 25px;
-            right: 25px;
-            font-size: 1.5em;
-            cursor: pointer;
-            color: #ccc;
-            user-select: none;
-            line-height: 1; /* 아이콘 위치 조정 */
-            z-index: 10;
-        }
-        .bookmark-icon.bookmarked {
-            color: #e74c3c;
-        }
-    </style>
 </head>
 <body>
 
@@ -74,7 +49,7 @@
         const productContainer = document.getElementById('product-list-container');
         
         // ---------------------------------------------
-        // 2. HTML 구조 생성 함수 (유지)
+        // 2. HTML 구조 생성 함수
         // ---------------------------------------------
         function createProductHtml(product) {
             const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
@@ -98,7 +73,7 @@
         }
 
         // ---------------------------------------------
-        // 3. 북마크 리스너 연결 함수 (유지)
+        // 3. 북마크 리스너 연결 함수
         // ---------------------------------------------
         function attachBookmarkListeners() {
             document.querySelectorAll('.bookmark-icon').forEach(icon => {
@@ -181,7 +156,7 @@
         }
 
         // ---------------------------------------------
-        // 5. 탭 클릭 이벤트 핸들러 (유지)
+        // 5. 탭 클릭 이벤트 핸들러
         // ---------------------------------------------
         tabs.forEach(tab => {
             tab.addEventListener('click', (e) => {
@@ -192,6 +167,9 @@
                 
                 // 탭 클릭 시에는 검색어 없이 카테고리만 필터링
                 renderProducts(selectedCategory, null); 
+                
+                // 타이틀 초기화
+                document.querySelector('.page-content h1').textContent = 'CATEGORY';
             });
         });
 
@@ -200,7 +178,6 @@
         // ---------------------------------------------
         window.onload = () => {
             const urlParams = new URLSearchParams(window.location.search);
-            // ⭐️ 'search' 쿼리 파라미터를 정확히 가져옴
             const searchQuery = urlParams.get('search');
             
             if (searchQuery) {

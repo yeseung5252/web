@@ -1,270 +1,145 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-   <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DIARY ARCHIVE</title>
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2207-02@1.0/LeeSeoyun.min.css">
     
     <link rel="stylesheet" href="style.css">
-    <style>
-        .content {
-            width: 100%;
-            height: 100vh;
-            overflow: hidden;
-            position: relative;
-        }
-        .image-slider {
-            display: flex;
-            width: 400%; /* 4개의 슬라이드 */
-            height: 100%;
-            transition: transform 0.5s ease-in-out;
-        }
-        .slide {
-            width: 25%;
-            height: 100%;
-            position: relative;
-        }
-        .full-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .overlay-sidebar {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 280px;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.7);
-            color: white;
-            padding: 30px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .logo {
-            font-size: 1.8em;
-            margin-bottom: 50px;
-        }
-        .main-menu a {
-            color: rgb(0, 0, 0);
-            text-decoration: none;
-            display: block;
-            padding: 10px 0;
-            font-size: 1.1em;
-        }
-        .about-us a {
-            color: #ccc;
-            text-decoration: none;
-            font-size: 0.9em;
-        }
-        /* 오버레이 스타일 (검색, 메뉴) */
-        .search-overlay, .main-menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            color: white;
-            display: none; 
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-        .search-overlay.active, .main-menu-overlay.active {
-            display: flex;
-        }
-        .close-search-button, .close-main-menu-button {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 2em;
-            cursor: pointer;
-        }
-        /* ⭐️ 수동 슬라이드 제어 버튼 스타일 ⭐️ */
-        .slide-control {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            font-size: 2em;
-            cursor: pointer;
-            z-index: 50; 
-            transition: background-color 0.3s;
-        }
-        .slide-control:hover {
-            background: rgba(0, 0, 0, 0.8);
-        }
-        .slide-control.prev {
-            left: 20px;
-        }
-        .slide-control.next {
-            right: 20px;
-        }
-    </style>
 </head>
 <body>
 
-    <main class="content">
+    <div class="content">
+
         <div class="image-slider" id="image-slider">
-            
-            <div class="slide slide-with-menu" data-index="0">
-                <img src="main-image-1.jpg" alt="메인 이미지 1" class="full-img">
-
-                <div class="overlay-sidebar">
-                    <h1 class="logo">DIARY ARCHIVE</h1>
-                    <nav class="main-menu">
-                        <a href="category.html">CATEGORY</a>
-                        <a href="bookmark.html">BOOKMARK</a>
-                        <a href="#" id="open-search" class="icon-link">🔍 검색</a>
-                        <a href="#" id="open-main-menu" class="icon-link">☰ 메뉴</a>
-                    </nav>
-                    <div class="about-us">
-                        <a href="about.html">ABOUT US</a>
-                    </div>
-                </div>
+            <div class="slide" data-id="1">
+                <img src="main-image-1.JPG" alt="다이어리 상품 이미지 1" class="full-img">
             </div>
-
-            <div class="slide" data-index="1">
-                <img src="main-image-2.jpg" alt="메인 이미지 2" class="full-img">
+            <div class="slide" data-id="2">
+                <img src="main-image-2.JPG" alt="다이어리 상품 이미지 2" class="full-img">
             </div>
-            <div class="slide" data-index="2">
-                <img src="main-image-3.jpg" alt="메인 이미지 3" class="full-img">
+            <div class="slide" data-id="3">
+                <img src="main-image-3.JPG" alt="다이어리 상품 이미지 3" class="full-img">
             </div>
-            <div class="slide" data-index="3">
-                <img src="main-image-4.jpg" alt="메인 이미지 4" class="full-img">
+            <div class="slide" data-id="4">
+                <img src="main-image-4.JPG" alt="다이어리 상품 이미지 4" class="full-img">
             </div>
         </div>
-        
-        <button class="slide-control prev" id="prev-slide">‹</button>
-        <button class="slide-control next" id="next-slide">›</button>
 
-    </main>
-    
+        <div class="controls">
+            <button class="prev-button" id="prev-button">‹</button>
+            <button class="next-button" id="next-button">›</button>
+
+            <div class="icons">
+                <a href="#" class="search-icon" id="search-icon">🔍</a>
+                <a href="#" class="menu-icon" id="menu-icon">☰</a> 
+            </div>
+        </div>
+    </div>
+
     <div class="search-overlay" id="search-modal">
-        <button class="close-search-button" aria-label="닫기">X</button>
+        <button class="close-search-button" id="close-search-button">X</button>
         <div class="search-content">
-            <form action="/search" method="GET">
-                <input type="text" name="q" placeholder="검색어를 입력하세요." autofocus>
-                <button type="submit">🔍</button>
+            <form>
+                <input type="text" name="q" placeholder="검색어를 입력하세요 (예: 스티커, 다이어리)">
+                <button type="submit">검색</button>
             </form>
         </div>
     </div>
 
-    <div class="main-menu-overlay" id="main-menu-modal">
-        <button class="close-main-menu-button" aria-label="닫기">X</button>
-        <div class="menu-content">
-            <h2>전체 메뉴</h2>
-            <nav class="full-menu">
-                <a href="index.html">홈</a> 
-                <a href="about.html">ABOUT US</a> 
-                <a href="hot.html">HOT NOW</a>
-                <a href="category.html">CATEGORY</a>
-                <a href="bookmark.html">BOOKMARK</a>
-            </nav>
-        </div>
+    <div class="main-menu-overlay" id="main-menu-overlay">
+        <button class="close-main-menu-button" id="close-main-menu-button">X</button>
+        <h2>MENU</h2>
+        <nav class="full-menu">
+            <a href="category.html">CATEGORY</a>
+            <a href="bookmark.html">BOOKMARK</a>
+            <a href="hot.html">HOT NOW</a>
+            <a href="about.html">ABOUT US</a>
+        </nav>
     </div>
 
     <script>
-        // 요소 선택
-        const openSearchLink = document.getElementById('open-search');
-        const searchModal = document.getElementById('search-modal');
-        const closeSearchButton = document.querySelector('.close-search-button');
-
-        const openMainMenuLink = document.getElementById('open-main-menu');
-        const mainMenuModal = document.getElementById('main-menu-modal');
-        const closeMainMenuButton = document.querySelector('.close-main-menu-button');
-        
-        // 슬라이더 요소 선택 (수동 버튼 포함)
+        // ==============================================
+        // 1. 슬라이더 기능
+        // ==============================================
         const slider = document.getElementById('image-slider');
-        const prevButton = document.getElementById('prev-slide'); 
-        const nextButton = document.getElementById('next-slide'); 
-        let currentIndex = 0;
-        const totalSlides = 4;
+        const slides = document.querySelectorAll('.slide');
+        const prevButton = document.getElementById('prev-button');
+        const nextButton = document.getElementById('next-button');
+        let currentSlide = 0;
+        const totalSlides = slides.length;
 
-        // ---------------------------------------------
-        // 1. 슬라이더 로직 (자동 -> 수동)
-        // ---------------------------------------------
-        function updateSlider() {
-            // 인덱스 범위 확인 및 조정 (순환)
-            if (currentIndex < 0) {
-                currentIndex = totalSlides - 1; 
-            } else if (currentIndex >= totalSlides) {
-                currentIndex = 0; 
-            }
-
-            const offset = currentIndex * -25; 
-            slider.style.transform = `translateX(${offset}%)`;
+        function goToSlide(index) {
+            currentSlide = (index + totalSlides) % totalSlides;
+            slider.style.transform = `translateY(-${currentSlide * 100}vh)`;
         }
 
-        // 이전 버튼 클릭 리스너
         prevButton.addEventListener('click', () => {
-            currentIndex--;
-            updateSlider();
+            goToSlide(currentSlide - 1);
         });
 
-        // 다음 버튼 클릭 리스너
         nextButton.addEventListener('click', () => {
-            currentIndex++;
-            updateSlider();
+            goToSlide(currentSlide + 1);
         });
-        
-        // 초기 로드 시 실행
-        document.addEventListener('DOMContentLoaded', updateSlider);
+
+        // 초기 로드 시 첫 번째 슬라이드로 설정
+        goToSlide(0); 
 
 
-// ---------------------------------------------
-    // 2. 검색 오버레이 로직
-    // ---------------------------------------------
-    
-   // index.html 파일의 스크립트 부분 확인
-document.querySelector('#search-modal form').addEventListener('submit', function(e) {
-    e.preventDefault(); // <-- 이 줄이 405 오류 방지 및 현재 로직 실행의 핵심입니다.
-    
-    const searchInput = document.querySelector('#search-modal input[name="q"]');
-    const query = searchInput.value.trim();
+        // ==============================================
+        // 2. 오버레이 메뉴 토글 기능
+        // ==============================================
+        const menuIcon = document.getElementById('menu-icon');
+        const mainMenuOverlay = document.getElementById('main-menu-overlay');
+        const closeMainMenuButton = document.getElementById('close-main-menu-button');
 
-    if (query) {
-        // ⭐️ 검색어가 category.html로 쿼리 파라미터로 전달되는지 확인
-        window.location.href = `category.html?search=${encodeURIComponent(query)}`;
-    } else {
-        alert('검색어를 입력해주세요.');
-    }
-});
-
-    openSearchLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        searchModal.classList.add('active');
-        // 오버레이가 열릴 때 input에 포커스
-        searchModal.querySelector('input[name="q"]').focus(); 
-    });
-
-    closeSearchButton.addEventListener('click', () => {
-        searchModal.classList.remove('active');
-    });
-
-        // ---------------------------------------------
-        // 3. 전체 메뉴 오버레이 로직
-        // ---------------------------------------------
-
-        openMainMenuLink.addEventListener('click', (e) => {
+        menuIcon.addEventListener('click', (e) => {
             e.preventDefault();
-            mainMenuModal.classList.add('active');
+            mainMenuOverlay.classList.add('active');
         });
 
         closeMainMenuButton.addEventListener('click', () => {
-            mainMenuModal.classList.remove('active');
+            mainMenuOverlay.classList.remove('active');
         });
+
+        // ==============================================
+        // 3. 검색 오버레이 기능 및 검색어 전달
+        // ==============================================
+        const searchIcon = document.getElementById('search-icon');
+        const searchModal = document.getElementById('search-modal');
+        const closeSearchButton = document.getElementById('close-search-button');
+
+        searchIcon.addEventListener('click', (e) => {
+            e.preventDefault();
+            searchModal.classList.add('active');
+        });
+
+        closeSearchButton.addEventListener('click', () => {
+            searchModal.classList.remove('active');
+        });
+
+        // ⭐️ 검색어 입력 후 category.html로 이동 및 쿼리 파라미터 전달
+        document.querySelector('#search-modal form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const searchInput = document.querySelector('#search-modal input[name="q"]');
+            const query = searchInput.value.trim();
+
+            if (query) {
+                // 검색어를 URL 파라미터로 전달
+                window.location.href = `category.html?search=${encodeURIComponent(query)}`;
+            } else {
+                alert('검색어를 입력해주세요.');
+            }
+        });
+        
+        // ==============================================
+        // 4. 로그인/회원가입 기능 제거
+        // ==============================================
+        // 관련 모든 요소 및 이벤트 리스너 제거됨
+        
     </script>
 </body>
 </html>
