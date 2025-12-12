@@ -11,8 +11,19 @@
 </head>
 <body>
 
-    <div class="content">
+    <div class="overlay-sidebar">
+        <div class="logo">DIARY<br>ARCHIVE</div>
+        <nav class="main-menu">
+            <a href="category.html">CATEGORY</a>
+            <a href="bookmark.html">BOOKMARK</a>
+            <a href="hot.html">HOT NOW</a>
+        </nav>
+        <nav class="about-us">
+            <a href="about.html">ABOUT US</a>
+        </nav>
+    </div>
 
+    <div class="content">
         <div class="image-slider" id="image-slider">
             <div class="slide" data-id="1">
                 <img src="main-image-1.JPG" alt="다이어리 상품 이미지 1" class="full-img">
@@ -27,17 +38,18 @@
                 <img src="main-image-4.JPG" alt="다이어리 상품 이미지 4" class="full-img">
             </div>
         </div>
-
-        <div class="controls">
-            <button class="prev-button" id="prev-button">‹</button>
-            <button class="next-button" id="next-button">›</button>
-
-            <div class="icons">
-                <a href="#" class="search-icon" id="search-icon">🔍</a>
-                <a href="#" class="menu-icon" id="menu-icon">☰</a> 
-            </div>
-        </div>
     </div>
+
+    <div class="controls">
+        <button class="prev-button" id="prev-button">‹</button>
+        <button class="next-button" id="next-button">›</button>
+    </div>
+
+    <div class="icons">
+        <a href="#" class="search-icon" id="search-icon">🔍</a>
+        <a href="#" class="menu-icon" id="menu-icon">☰</a> 
+    </div>
+
 
     <div class="search-overlay" id="search-modal">
         <button class="close-search-button" id="close-search-button">X</button>
@@ -47,18 +59,6 @@
                 <button type="submit">검색</button>
             </form>
         </div>
-    </div>
-
-    <div class="overlay-sidebar">
-    <div class="logo">DIARY<br>ARCHIVE</div>
-    <nav class="main-menu">
-        <a href="category.html">CATEGORY</a>
-        <a href="bookmark.html">BOOKMARK</a>
-        <a href="hot.html">HOT NOW</a>
-    </nav>
-    <nav class="about-us">
-        <a href="about.html">ABOUT US</a>
-    </nav>
     </div>
 
     <div class="main-menu-overlay" id="main-menu-overlay">
@@ -96,16 +96,16 @@
             goToSlide(currentSlide + 1);
         });
 
-        // 초기 로드 시 첫 번째 슬라이드로 설정
         goToSlide(0); 
 
 
         // ==============================================
-        // 2. 오버레이 메뉴 토글 기능
+        // 2. 메인 메뉴 오버레이 토글 기능
         // ==============================================
         const menuIcon = document.getElementById('menu-icon');
         const mainMenuOverlay = document.getElementById('main-menu-overlay');
         const closeMainMenuButton = document.getElementById('close-main-menu-button');
+        const searchModal = document.getElementById('search-modal'); // 검색 모달 닫기용
 
         menuIcon.addEventListener('click', (e) => {
             e.preventDefault();
@@ -115,12 +115,19 @@
         closeMainMenuButton.addEventListener('click', () => {
             mainMenuOverlay.classList.remove('active');
         });
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                mainMenuOverlay.classList.remove('active');
+                searchModal.classList.remove('active');
+            }
+        });
+
 
         // ==============================================
         // 3. 검색 오버레이 기능 및 검색어 전달
         // ==============================================
         const searchIcon = document.getElementById('search-icon');
-        const searchModal = document.getElementById('search-modal');
         const closeSearchButton = document.getElementById('close-search-button');
 
         searchIcon.addEventListener('click', (e) => {
@@ -132,7 +139,7 @@
             searchModal.classList.remove('active');
         });
 
-        // ⭐️ 검색어 입력 후 category.html로 이동 및 쿼리 파라미터 전달
+        // 검색어 입력 후 category.html로 이동 및 쿼리 파라미터 전달
         document.querySelector('#search-modal form').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -146,12 +153,6 @@
                 alert('검색어를 입력해주세요.');
             }
         });
-        
-        // ==============================================
-        // 4. 로그인/회원가입 기능 제거
-        // ==============================================
-        // 관련 모든 요소 및 이벤트 리스너 제거됨
-        
     </script>
 </body>
 </html>
