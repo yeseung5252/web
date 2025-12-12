@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>북마크</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* 최소한의 스타일 정의 */
+        body { margin: 0; font-family: Arial, sans-serif; background-color: #f4f4f4; }
+        .page-content { padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
+        h1 { margin-bottom: 30px; border-bottom: 2px solid #ddd; padding-bottom: 10px; }
+
+        /* 상품 목록 스타일 */
+        .product-link { text-decoration: none; color: inherit; }
+        .product-list-container { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+            gap: 30px; 
+        }
+        .product-item { 
+            background: white; 
+            padding: 15px; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+            text-align: center; 
+            position: relative; 
+        }
+        .product-item img { 
+            width: 100%; 
+            height: auto; 
+            border-radius: 6px; 
+            margin-bottom: 10px; 
+        }
+        .product-item h3 { 
+            font-size: 1.1em; 
+            margin: 5px 0; 
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+        }
+        .price { 
+            font-weight: bold; 
+            color: #333; 
+        }
+        /* 북마크 아이콘 (제거 버튼 역할) */
+        .bookmark-icon {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #e74c3c; /* 북마크 페이지에서는 빨간색 하트(꽉 찬 하트)로 표시 */
+            user-select: none;
+            line-height: 1;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-content">
+        <h1>나의 북마크</h1>
+
+        <div class="product-list-container" id="bookmark-list-container">
+            <p id="empty-message" style="text-align: center; margin-top: 50px; display: none;">
+                북마크한 상품이 없습니다. CATEGORY 페이지에서 마음에 드는 상품을 하트로 표시해 보세요!
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // ---------------------------------------------
+        // 1. 상품 데이터 정의 (category.html과 동일해야 함)
+        // ---------------------------------------------
+        const products = [
+            { id: 1, name: "호보니치 테쵸 다이어리", category: "diary", price: 45400, img: "prod-1.jpg", link:"https://smartstore.naver.com/_bestpen/products/12338987905?nl-query=%ED%98%B8%EB%B3%B4%EB%8B%88%EC%B9%98+2026&nl-ts-pid=jgw0VlqX6IdssfVc9f0-420469&NaPm=ct%3Dmj30v9r4%7Cci%3D7a4ddc04d76cc5a9dbcc00c9b3c5eaebb274ff25%7Ctr%3Dimg%7Csn%3D457624%7Chk%3D7bd37faf06f06779dcbcc41570addf0d41ae28f1" },
+            { id: 2, name: "핑루 딸기초코 스티커팩", category: "sticker", price: 8000, img: "prod-2.jpg", link:"http://www.10x10.co.kr/shopping/category_prd.asp?itemid=6779971" },
+            { id: 3, name: "어버블크러쉬 A7 6공 바인더", category: "binder", price: 20000, img: "prod-3.jpg", link:"https://smartstore.naver.com/sosorowa/products/11877022826" },
+            { id: 4, name: "도롱상점 음표 젤리 MT", category: "tape", price: 4000, img: "prod-4.jpg", link:"https://smartstore.naver.com/dorong_ham/products/10490896026" },
+            { id: 5, name: "지구침략 초코바나나 모조지", category: "modoji", price: 3000, img: "prod-5.jpg", link:"https://smartstore.naver.com/chuplay/products/11549780555" },
+            { id: 6, name: "제키베어 패턴별 키스컷", category: "kisscut", price: 6000, img: "prod-6.jpg", link:"https://smartstore.naver.com/helloplay/products/11958162205" },
+            { id: 7, name: "페이젬 다이어리", category: "diary", price: 21900, img: "prod-7.jpg", link:"https://www.coupang.com/vp/products/8405289397?itemId=24299267108&vendorItemId=91315257515&src=1032001&spec=10305199&addtag=400&ctag=8405289397&lptag=I24299267108&itime=20251213002925&pageType=PRODUCT&pageValue=8405289397&wPcid=17552633397573116103713&wRef=cr.shopping.naver.com&wTime=20251213002925&redirect=landing&mcid=b92706fd02d14de3a9117b355a300936&n_keyword=&n_ad_group=&n_ad=&n_ad=&n_rank=&n_keyword_id=&n_media=&n_campaign_type=&n_query=" },
+            { id: 8, name: "B6 다이어리 PVC 커버", category: "cover", price: 1500, img: "prod-8.jpg", link:"http://www.10x10.co.kr/shopping/category_prd.asp?itemid=6438417" },
+            { id: 9, name: "도미월드 무광칼선스티커", category: "sticker", price: 5500, img: "prod-9.jpg", link:"https://smartstore.naver.com/dudumoon/products/7624754781?nl-query=%EB%8F%84%EB%AF%B8%EC%9B%94%EB%93%9C+%EC%8A%A4%ED%8B%B0%EC%BB%A4&nl-ts-pid=jgw3EwqX6IdssfVb32C-357965&NaPm=ct%3Dmj31ba54%7Cci%3Ddfa20f8029496a7d24323f318ce0888025c992fd%7Ctr%3Dimg%7Csn%3D931564%7Chk%3Ddf1cf010bb96fff77bcb986361b5eb31d1fbb2cb" },
+        ];
+
+        const bookmarkContainer = document.getElementById('bookmark-list-container');
+        const emptyMessage = document.getElementById('empty-message');
+
+        // ---------------------------------------------
+        // 2. HTML 구조 생성 함수
+        // ---------------------------------------------
+        function createProductHtml(product) {
+            // 북마크 페이지에서는 항상 꽉 찬 하트(제거 버튼)로 표시
+            const heartIcon = '♥'; 
+            const heartClass = 'bookmarked'; 
+
+            return `
+                <a href="${product.link}" target="_blank" class="product-link">
+                    <div class="product-item">
+                        <img src="${product.img}" alt="${product.name}">
+                        <h3>${product.name}</h3>
+                        <p class="price">${product.price.toLocaleString()}원</p>
+                        
+                        <span class="bookmark-icon ${heartClass}" 
+                              data-product-id="${product.id}" 
+                              data-action="remove">
+                            ${heartIcon}
+                        </span>
+                    </div>
+                </a>
+            `;
+        }
+
+        // ---------------------------------------------
+        // 3. 북마크 제거 리스너 연결 함수
+        // ---------------------------------------------
+        function attachRemoveListeners() {
+            document.querySelectorAll('.bookmark-icon[data-action="remove"]').forEach(icon => {
+                icon.addEventListener('click', (e) => {
+                    e.preventDefault();   
+                    e.stopPropagation();  
+                    
+                    const productId = parseInt(icon.dataset.productId);
+                    let bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+
+                    // 해당 ID를 목록에서 제거
+                    bookmarks = bookmarks.filter(id => id !== productId);
+
+                    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+                    
+                    // 목록을 다시 렌더링하여 제거된 상품이 바로 사라지게 함
+                    renderBookmarks(); 
+                });
+            });
+        }
+        
+        // ---------------------------------------------
+        // 4. 북마크 목록 렌더링 메인 로직
+        // ---------------------------------------------
+        function renderBookmarks() {
+            // 1. 로컬 저장소에서 북마크 ID 목록을 가져옵니다.
+            const bookmarkIds = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+            
+            // 2. 전체 상품 목록에서 북마크 ID와 일치하는 상품만 필터링합니다.
+            const bookmarkedProducts = products.filter(product => 
+                bookmarkIds.includes(product.id)
+            );
+            
+            // 3. 결과 표시
+            if (bookmarkedProducts.length === 0) {
+                bookmarkContainer.innerHTML = '';
+                emptyMessage.style.display = 'block'; // 비었을 때 메시지 표시
+            } else {
+                emptyMessage.style.display = 'none'; // 비지 않았을 때 메시지 숨김
+                
+                const productHtml = bookmarkedProducts.map(createProductHtml).join('');
+                bookmarkContainer.innerHTML = productHtml;
+
+                // 제거 버튼 리스너 연결
+                attachRemoveListeners(); 
+            }
+        }
+
+        // ---------------------------------------------
+        // 5. 페이지 로드 시 북마크 렌더링
+        // ---------------------------------------------
+        window.onload = renderBookmarks;
+    </script>
+</body>
+</html>

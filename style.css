@@ -1,0 +1,323 @@
+/* style.css */
+
+/* 기본 스타일 초기화 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* 폰트 지정: 이서윤체 우선, 영문은 Arial */
+    font-family: '이서윤체', 'Nanum Pen Script', Arial, sans-serif; 
+}
+
+/* 1. 풀 스크린 설정 */
+body {
+    margin: 0; 
+    padding: 0;
+    height: 100vh; /* 화면 높이를 꽉 채움 */
+    background-color: white; 
+}
+
+/* 2. 메인 콘텐츠 (스크롤 영역) */
+.content {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.content::-webkit-scrollbar {
+    display: none;
+}
+
+/* 3. 이미지 슬라이더 및 개별 슬라이드 */
+.image-slider {
+    height: 400vh; /* 슬라이드 4개 x 100vh */
+}
+
+.slide {
+    width: 100%;
+    height: 100vh;
+    scroll-snap-align: start; 
+    position: relative;
+}
+
+/* 4. 이미지 크기 및 잘림 최소화 */
+.slide .full-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    object-position: center top; /* 잘림이 발생해도 이미지의 상단 중앙을 우선 보여줌 */
+}
+
+/* 5. 오버레이 사이드바 스타일 (텍스트 상단 정렬) */
+.overlay-sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300px; 
+    height: 100%;
+    padding: 50px 40px; 
+    background-color: rgba(255, 255, 255, 0.9);
+    
+    display: flex;
+    flex-direction: column;
+}
+
+.logo {
+    font-size: 36px;
+    font-weight: bold;
+    color: #87ceeb; 
+    line-height: 1.2;
+    margin-bottom: 30px; 
+    font-family: Arial, 'Helvetica Neue', sans-serif; 
+}
+
+.main-menu a, .about-us a {
+    display: block;
+    text-decoration: none;
+    color: #444;
+    font-size: 16px;
+    margin-bottom: 8px;
+    padding: 2px 0;
+    font-weight: 500;
+}
+
+.about-us {
+    margin-top: 50px;
+}
+
+.icon-link {
+    font-size: 18px; 
+    margin-top: 10px; 
+}
+
+/* ======================================================= */
+/* ⭐️ 6. 폼 오버레이 스타일 (로그인, 회원가입, 비밀번호 찾기) ⭐️ */
+/* ======================================================= */
+
+.form-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); 
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.form-overlay.active {
+    display: flex;
+}
+
+.form-container {
+    background-color: white;
+    padding: 40px 50px;
+    border-radius: 10px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+}
+
+.form-container.hidden {
+    display: none;
+}
+
+.form-title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #555;
+    font-size: 14px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #87ceeb;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+    background-color: #5fb0d7;
+}
+
+.form-links {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 14px;
+}
+
+.form-links a {
+    color: #87ceeb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.form-links a:hover {
+    text-decoration: underline;
+}
+
+.separator {
+    margin: 0 10px;
+    color: #aaa;
+}
+
+.close-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #aaa;
+}
+
+
+/* ======================================================= */
+/* ⭐️ 7. 검색 오버레이 스타일 ⭐️ */
+/* ======================================================= */
+
+.search-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white; 
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999; 
+    transition: opacity 0.3s;
+}
+
+.search-overlay.active {
+    display: flex;
+}
+
+.search-overlay .close-search-button {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    background: none;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    color: #333;
+}
+
+.search-content form {
+    display: flex;
+    width: 600px;
+    max-width: 90vw;
+}
+
+.search-content input[type="text"] {
+    flex-grow: 1;
+    padding: 15px 20px;
+    border: 3px solid #87ceeb;
+    border-right: none;
+    border-radius: 8px 0 0 8px;
+    font-size: 20px;
+    outline: none;
+    font-family: Arial, sans-serif;
+}
+
+.search-content button[type="submit"] {
+    padding: 15px 20px;
+    background-color: #87ceeb;
+    color: white;
+    border: none;
+    border-radius: 0 8px 8px 0;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+
+/* ======================================================= */
+/* ⭐️ 8. 메인 메뉴 오버레이 스타일 ⭐️ */
+/* ======================================================= */
+
+.main-menu-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100%;
+    background-color: #f8f8f8;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    transform: translateX(100%);
+    transition: transform 0.3s ease-out;
+    z-index: 998;
+    padding: 40px 20px;
+    display: flex; /* 메뉴 내용을 상단 정렬하기 위해 flex 적용 */
+    flex-direction: column;
+}
+
+.main-menu-overlay.active {
+    transform: translateX(0);
+}
+
+.main-menu-overlay h2 {
+    font-size: 24px;
+    margin-bottom: 30px;
+    color: #87ceeb;
+}
+
+.main-menu-overlay .full-menu a {
+    display: block;
+    text-decoration: none;
+    color: #444;
+    padding: 12px 0;
+    font-size: 18px;
+    border-bottom: 1px solid #eee;
+}
+
+.main-menu-overlay .full-menu a:hover {
+    color: #5fb0d7;
+}
+
+.main-menu-overlay .close-main-menu-button {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #aaa;
+}
