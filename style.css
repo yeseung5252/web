@@ -6,7 +6,7 @@
     padding: 0;
     box-sizing: border-box;
     /* 폰트 지정: 이서윤체 우선, 영문은 Arial */
-    font-family: '이서윤체', 'Nanum Pen Script', Arial, sans-serif; 
+    font-family: 'LeeSeoyun', 'Nanum Pen Script', Arial, sans-serif; 
 }
 
 /* 1. 풀 스크린 설정 */
