@@ -301,3 +301,48 @@ h1 {
     color: #000; 
     border-bottom: 3px solid #000; 
 }
+
+/* ======================================================= */
+/* ⭐️ 9. 고정 사이드바 스타일 (원래 메인 화면에 있던 메뉴) ⭐️ */
+/* ======================================================= */
+.overlay-sidebar {
+    position: fixed; /* fixed로 변경 */
+    top: 0;
+    left: 0;
+    width: 300px; 
+    height: 100%;
+    padding: 50px 40px; 
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 5; /* icons보다 낮은 z-index */
+    
+    display: flex;
+    flex-direction: column;
+}
+
+.logo {
+    font-size: 36px;
+    font-weight: bold;
+    color: #87ceeb; 
+    line-height: 1.2;
+    margin-bottom: 30px; 
+    /* 폰트 상속을 위해 Arial 제거 (body의 LeeSeoyun 적용) */
+}
+
+.main-menu a, .about-us a {
+    display: block;
+    text-decoration: none;
+    color: #444;
+    font-size: 16px;
+    margin-bottom: 8px;
+    padding: 2px 0;
+    font-weight: 500;
+}
+
+.about-us {
+    margin-top: 50px;
+}
+
+.icon-link {
+    font-size: 18px; 
+    margin-top: 10px; 
+}
